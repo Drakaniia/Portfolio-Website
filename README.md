@@ -1,5 +1,7 @@
 # Portfolio Website
 
+![Portfolio Website Hero Screenshot](assets/images/hero.png)
+
 This is a personal portfolio website showcasing projects, achievements, and personal information.
 
 ## Folder Structure
@@ -9,6 +11,11 @@ Portfolio-Website/
 ├── index.html
 ├── blog.html
 ├── flex.html
+├── .github/
+│   └── workflows/
+│       ├── build-deploy.yml
+│       ├── create-release.yml
+│       └── release.yml
 ├── assets/
 │   ├── css/
 │   │   ├── main/
@@ -20,6 +27,7 @@ Portfolio-Website/
 │   ├── js/
 │   │   └── (JavaScript files will go here)
 │   ├── images/
+│   │   ├── hero.png
 │   │   ├── profile/
 │   │   ├── projects/
 │   │   ├── achievements/
