@@ -1,0 +1,47 @@
+name: Create Release with Assets
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Zip release assets
+      run: |
+        # Create a zip file of the portfolio website
+        zip -r portfolio-website-${{ github.ref_name }}.zip . -x "*.git*" "node_modules/*" ".github/*" ".gitignore"
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref_name }}
+        body: |
+          Release of portfolio website version ${{ github.ref_name }}
+          
+          ## Changes in this release:
+          - Portfolio website with organized asset structure
+          - Clean architecture following web development best practices
+          - Updated HTML files with correct asset paths
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./portfolio-website-${{ github.ref_name }}.zip
+        asset_name: portfolio-website-${{ github.ref_name }}.zip
+        asset_content_type: application/zip
